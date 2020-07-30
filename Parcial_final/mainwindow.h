@@ -7,6 +7,8 @@
 #include <QTimer>
 #include <QList>
 #include "bolas.h"
+#include "obstaculo.h"
+#include "especial.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,7 +28,9 @@ private slots:
     void on_iniciar_clicked();
 
 public slots:
-    void spawn();
+    void spawn_bolas();
+    void spawn_obstaculos();
+    void spawn_especial();
 
 private:
     Ui::MainWindow *ui;
@@ -37,7 +41,11 @@ private:
     QGraphicsLineItem *l3;
     QGraphicsLineItem *l4;
 
-    QTimer *timer;
+    QTimer *timer_bolas;
+    QTimer *timer_obstaculos;
+    QTimer *timer_especial;
     Bolas *b;
+    Obstaculo *o;
+    Especial *e;
 };
 #endif // MAINWINDOW_H

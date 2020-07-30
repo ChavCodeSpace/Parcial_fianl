@@ -27,11 +27,15 @@ MainWindow::MainWindow(QWidget *parent)
     l4 = new QGraphicsLineItem(650,65,650,410);
 
 
-    //Timer
-    timer = new QTimer;
-    connect(timer,SIGNAL(timeout()),this,SLOT(spawn()));
+    //Timers
+    timer_bolas = new QTimer();
+    connect(timer_bolas,SIGNAL(timeout()),this,SLOT(spawn_bolas()));
 
+    timer_especial = new QTimer();
+    connect(timer_especial,SIGNAL(timeout()),this,SLOT(spawn_especial()));
 
+    timer_obstaculos = new QTimer();
+    connect(timer_obstaculos,SIGNAL(timeout()),this,SLOT(spawn_obstaculos()));
 }
 
 MainWindow::~MainWindow()
@@ -53,16 +57,35 @@ void MainWindow::on_iniciar_clicked()
     scene->addItem(l4);
 
 
-    timer->start(3000);
+    timer_bolas->start(2000);
+    timer_especial->start(1000);
+    timer_obstaculos->start(1000);
 }
 
-void MainWindow::spawn()
+void MainWindow::spawn_bolas()
 {
-//    int random_x = rand() % 640 + 20;
-//    int random_y = rand() % 100 + 65;
-//    b = new Bolas(random_x,random_y);
-//    b->setPos(random_x,random_y);
-//    scene->addItem(b);
+    int random_x = rand() % 640 + 20;
+    int random_y = rand() % 100 + 65;
+    b = new Bolas();
+    b->setPos(random_x,random_y);
+    scene->addItem(b);
 
 
+}
+
+void MainWindow::spawn_obstaculos()
+{
+    int random_x = rand() % 640 + 20;
+    int random_y = rand() % 300 + 200;
+    o = new Obstaculo();
+    o->setPos(random_x, random_y);
+    scene->addItem(o);
+}
+
+void MainWindow::spawn_especial()
+{
+    int random_x = rand() % 640 + 20;
+    e = new Especial();
+    e->setPos(random_x,0);
+    scene->addItem(e);
 }
