@@ -1,11 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
+#include "bolas.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    srand(time(NULL));
 
     //scene
     scene = new QGraphicsScene(15,61,640,360);
@@ -28,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //Timers
+    timer = new QTimer();
+    connect(timer,SIGNAL(timeout()),this,SLOT(move()));
+
     timer_bolas = new QTimer();
     connect(timer_bolas,SIGNAL(timeout()),this,SLOT(spawn_bolas()));
 
@@ -46,7 +53,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_b_ob_especial_clicked()
 {
-
+    int random_x = rand() % 640 + 20;
+    e = new Especial();
+    e->setPos(random_x,0);
+    scene->addItem(e);
 }
 
 void MainWindow::on_iniciar_clicked()
@@ -56,30 +66,33 @@ void MainWindow::on_iniciar_clicked()
     scene->addItem(l3);
     scene->addItem(l4);
 
-
+    //timer->start(5000);
     timer_bolas->start(2000);
-    timer_especial->start(1000);
-    timer_obstaculos->start(1000);
+    //timer_especial->start(1000);
+    timer_obstaculos->start(2000);
 }
 
 void MainWindow::spawn_bolas()
 {
     int random_x = rand() % 640 + 20;
     int random_y = rand() % 100 + 65;
-    b = new Bolas();
-    b->setPos(random_x,random_y);
+    b = new Bolas(random_x,random_y);
+    //b->setPos(random_x,random_y);
     scene->addItem(b);
-
+    //qDebug()<<"creo bola";
+    //lista_bolas.push_back(b);
 
 }
 
 void MainWindow::spawn_obstaculos()
 {
     int random_x = rand() % 640 + 20;
-    int random_y = rand() % 300 + 200;
+    int random_y = rand() % 300 + 100;
     o = new Obstaculo();
     o->setPos(random_x, random_y);
     scene->addItem(o);
+
+    lista_obstaculos.push_back(o);
 }
 
 void MainWindow::spawn_especial()
@@ -88,4 +101,28 @@ void MainWindow::spawn_especial()
     e = new Especial();
     e->setPos(random_x,0);
     scene->addItem(e);
+}
+
+void MainWindow::move()
+{
+//    for(QList<Bolas*>::Iterator it= lista_bolas.begin(); it!=lista_bolas.end(); it++)
+//    {
+//        (*it)->move();
+
+////        if((*it)->collidesWithItem(l3)){
+////            scene->removeItem(b);
+////            delete b;
+////            qDebug() << "elimino bola";
+////        }
+//    }
+}
+
+void MainWindow::erase()
+{
+//    for(QList<Obstaculo*>::Iterator it= lista_obstaculos.end(); it!=lista_obstaculos.begin(); it--)
+//    {
+//        scene->removeItem(lista_obstaculos.at(it));
+//        delete (*it);
+//    }
+
 }

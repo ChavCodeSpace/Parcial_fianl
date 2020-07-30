@@ -6,22 +6,25 @@
 #include <QGraphicsScene>
 #include <QTimer>
 #include <math.h>
+#include <QPainter>
+#include "obstaculo.h"
+#include "mainwindow.h"
 
 class Bolas: public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    Bolas();
+    Bolas(double px, double py);
 
-    void ActualizarPosicion();
-    void ActualizarVelocidad();
+public slots:
+    void move();
+
 
 private:
     QTimer *timer;
     double g= 9.8;
     double delta =0.1;
     double posy,posx, ang, vel, vel_x, vel_y;
-    int r;
 };
 
 #endif // BOLAS_H
