@@ -5,6 +5,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsLineItem>
 #include <QTimer>
+#include <QList>
+#include "bolas.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,6 +25,9 @@ private slots:
 
     void on_iniciar_clicked();
 
+public slots:
+    void spawn();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
@@ -33,5 +38,6 @@ private:
     QGraphicsLineItem *l4;
 
     QTimer *timer;
+    Bolas *b;
 };
 #endif // MAINWINDOW_H
